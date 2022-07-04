@@ -10,7 +10,7 @@
   text-align: center;
   max-width: 800px;
   margin: 0 auto;
-  background-color: #fde74c;
+  background-color: #f0e594;
   padding: 20px;
   min-height: 1000px;
 }
@@ -35,14 +35,8 @@ h3{
 #todo-name {
   width: 50%;
 }
-label{
-  padding: 10px;
-}
-.checkbox label:before {
-  transform: scale(2);
-}
-.checkbox label:after {
-  transform: scale(2);
+.checkbox {
+  margin-left: 10px;
 }
 #filter-btn{
 margin: 0;

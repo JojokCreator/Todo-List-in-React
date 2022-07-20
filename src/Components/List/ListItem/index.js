@@ -1,18 +1,16 @@
-import React from 'react'
-import { Checkbox, Button, List, Segment } from 'semantic-ui-react'
-
 const ListItem = (props) => {
+    console.log(props.tick)
     return (
-
-        <Segment raised>
-        <List.Item id='todo'>
-            <Checkbox label='Done' checked={props.tick} onChange={props.handleCheck} type='checkbox'></Checkbox>
-            <h3 id="todo-name">{props.item}</h3>
-            <div>
-            <Button floated='right' color="red "onClick={props.deleteToDo}>Delete this todo</Button>
+        <div id="todo" class="ui segment">
+            <div class="ui left aligned checkbox">
+            <input type="checkbox" checked={props.tick} onChange={props.handleCheck}/>
+            <label>Done</label>
             </div>
-        </List.Item>
-            </Segment>    
+            <h3 id="todo-name" style={{textDecoration: (props.tick === true) ? "line-through" : "none"}}>{props.item}</h3>
+            <div>
+            <button class="ui red button" floated='right' color="red "onClick={props.deleteToDo}>Delete this todo</button>
+            </div>
+        </div>
 
     )
 }

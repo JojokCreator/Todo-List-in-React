@@ -38,10 +38,7 @@ h3{
 .checkbox {
   margin-left: 10px;
 }
-#filter-btn{
-margin: 0;
-}
-Form{
-  padding: 10px;
-  margin-bottom: 40px;
+.box {
+  height: 36px;
+  margin-right: 20px;
 }

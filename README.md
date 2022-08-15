@@ -13,7 +13,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 ## Features
 <ul>
-<li>Ability to add ne todos to the list</li>
+<li>Ability to add new todos to the list</li>
 <li>Toggle the todo as done</li>
 <li>Filter the todo's by pending, done or show all</li>
 <li>Delete a todo</li>

@@ -21,6 +21,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  padding: 5px;
 }
 
 h1{
@@ -30,7 +31,7 @@ h1{
 
 h3{
   margin: 20px;
-  font-size: 2em;
+  font-size: 1.25em;
 }
 #todo-name {
   width: 50%;

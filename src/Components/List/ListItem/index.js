@@ -1,14 +1,14 @@
 const ListItem = (props) => {
-    console.log(props.tick)
+    console.log(props)
     return (
-        <div id="todo" class="ui segment">
-            <div class="ui left aligned checkbox">
+        <div id="todo" className="ui segment">
+            <div className="ui left aligned checkbox">
             <input type="checkbox" checked={props.tick} onChange={props.handleCheck}/>
             <label>Done</label>
             </div>
             <h3 id="todo-name" style={{textDecoration: (props.tick === true) ? "line-through" : "none"}}>{props.item}</h3>
             <div>
-            <button class="ui red button" floated='right' color="red "onClick={props.deleteToDo}>Delete this todo</button>
+            <button className="ui red button" floated='right' color="red "onClick={props.deleteToDo}>Delete</button>
             </div>
         </div>
 

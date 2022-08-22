@@ -1,14 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import InputForm from "../Input";
 import ListH from "../List";
 import ListItem from "../List/ListItem";
 import { useState } from "react";
+import { useTodosContext } from "../../hooks/useTodosContext"
 
 function App() {
 	const [InputValue, setInputValue] = useState("");
-	const [toList, setList] = useState([]);
-	const [filterValue, setfilterValue] = useState();
+	const [filterValue, setfilterValue] = useState([]);
+	const {todos, dispatch} = useTodosContext()
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const data = await fetch('https://go-todo-server.herokuapp.com/task');
+			const response = await data.json();
+			(response) ?
+			dispatch({type: 'SET_TODOS', payload: response })
+			:
+			dispatch({type: 'SET_TODOS', payload: [] })
+		}
+		fetchData()
+			.catch(console.error);
+	}, [dispatch])
+
 
 	function handleChange(e) {
 		setInputValue(e.target.value);
@@ -16,11 +31,17 @@ function App() {
 
 	function onClickToDo() {
 		const newTask = {
-			id: Math.floor(Math.random() * 1000),
-			name: InputValue,
-			completed: false,
+			task: InputValue,
+			status: false,
 		};
-		setList([...toList, newTask]);
+		fetch('https://go-todo-server.herokuapp.com/task', {
+			method: 'POST',
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(newTask)
+		})
+		dispatch({type: 'CREATE_TODO', payload: newTask})
 	}
 
 	function filterToDo() {
@@ -34,27 +55,39 @@ function App() {
 		setfilterValue("");
 	}
 
-	let filteredProductList = [...toList].filter((item) => {
+	let filteredProductList = todos.filter((item) => {
 		if (filterValue === "done") {
-			return item.completed === true;
+			return item.status === true;
 		} else if (filterValue === "pending") {
-			return item.completed === false;
+			return item.status === false;
 		} else {
 			return item;
 		}
 	});
-
-	function deleteToDo(id) {
-		const removeItems = [...toList].filter((item) => item.id !== id);
-		setList(removeItems);
+	
+	function deleteToDo(_id) {
+		fetch(`https://go-todo-server.herokuapp.com/deleteTask/${_id}`, {
+			method: 'DELETE',
+		})
+		dispatch({type: 'DELETE_TODO', payload: _id})
 	}
 
-	function handleCheck(id) {
-		const newList = toList.map((item) => {
-			if (item.id === id) return { ...item, completed: !item.completed };
+	function handleCheck(_id) {
+		todos.map((item) => {
+			if (item._id === _id)
+				if (item.status === false) {
+					fetch(`https://go-todo-server.herokuapp.com/task/${_id}`, {
+						method: 'PUT',
+					})
+					dispatch({type: 'TOGGLE', payload: _id })
+				} else {
+					fetch(`https://go-todo-server.herokuapp.com/undoTask/${_id}`, {
+						method: 'PUT',
+					})
+					dispatch({type: 'TOGGLE', payload: _id })
+				}
 			return item;
 		});
-		setList(newList);
 	}
 
 	return (
@@ -69,14 +102,14 @@ function App() {
 			<ListH>
 				{filteredProductList.map((item) => (
 					<ListItem
-						item={item.name}
-						key={item.id}
+						key={item._id}
+						item={item.task}
 						handleCheck={() => {
-							handleCheck(item.id);
+							handleCheck(item._id);
 						}}
-						tick={item.completed}
+						tick={item.status}
 						deleteToDo={() => {
-							deleteToDo(item.id);
+							deleteToDo(item._id);
 						}}
 					/>
 				))}

@@ -2,7 +2,7 @@ import React from 'react'
 
 const ListH = (props) => {
     return (
-        <div class="ui list">
+        <div className="ui list">
             {props.children}
         </div>
 

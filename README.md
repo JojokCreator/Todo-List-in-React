@@ -20,3 +20,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 </ul>
 
 The styling is done using Semantic UI but could still do with a little work on the aesthetics.
+
+## Latest additions
+
+I recently added a [backend](https://github.com/JojokCreator/go-todo-api) to this project. It consists of a server written in Go that links the data to a MongoDB Database. I also added useContext and useReducer to enable the todo's to be updated in real time when they are added or deleted.

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./App.css";
 import InputForm from "../Input";
-import ListH from "../List";
+import List from "../List";
 import ListItem from "../List/ListItem";
 import { useState } from "react";
 import { useTodosContext } from "../../hooks/useTodosContext"
@@ -9,16 +9,16 @@ import { useTodosContext } from "../../hooks/useTodosContext"
 function App() {
 	const [InputValue, setInputValue] = useState("");
 	const [filterValue, setfilterValue] = useState([]);
-	const {todos, dispatch} = useTodosContext()
+	const { todos, dispatch } = useTodosContext()
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const data = await fetch('https://go-todo-server.herokuapp.com/task');
+			const data = await fetch('https://go-todo-back-end.onrender.com/task');
 			const response = await data.json();
 			(response) ?
-			dispatch({type: 'SET_TODOS', payload: response })
-			:
-			dispatch({type: 'SET_TODOS', payload: [] })
+				dispatch({ type: 'SET_TODOS', payload: response })
+				:
+				dispatch({ type: 'SET_TODOS', payload: [] })
 		}
 		fetchData()
 			.catch(console.error);
@@ -34,14 +34,14 @@ function App() {
 			task: InputValue,
 			status: false,
 		};
-		fetch('https://go-todo-server.herokuapp.com/task', {
+		fetch('https://go-todo-back-end.onrender.com/task', {
 			method: 'POST',
 			headers: {
 				"Content-Type": "application/json"
 			},
 			body: JSON.stringify(newTask)
 		})
-		dispatch({type: 'CREATE_TODO', payload: newTask})
+		dispatch({ type: 'CREATE_TODO', payload: newTask })
 	}
 
 	function filterToDo() {
@@ -64,34 +64,36 @@ function App() {
 			return item;
 		}
 	});
-	
+
 	function deleteToDo(_id) {
-		fetch(`https://go-todo-server.herokuapp.com/deleteTask/${_id}`, {
+		fetch(`https://go-todo-back-end.onrender.com/deleteTask/${_id}`, {
 			method: 'DELETE',
 		})
-		dispatch({type: 'DELETE_TODO', payload: _id})
+		dispatch({ type: 'DELETE_TODO', payload: _id })
 	}
 
 	function handleCheck(_id) {
 		todos.map((item) => {
 			if (item._id === _id)
 				if (item.status === false) {
-					fetch(`https://go-todo-server.herokuapp.com/task/${_id}`, {
+					fetch(`https://go-todo-back-end.onrender.com/task/${_id}`, {
 						method: 'PUT',
 					})
-					dispatch({type: 'TOGGLE', payload: _id })
+					dispatch({ type: 'TOGGLE', payload: _id })
 				} else {
-					fetch(`https://go-todo-server.herokuapp.com/undoTask/${_id}`, {
+					fetch(`https://go-todo-back-end.onrender.com/undoTask/${_id}`, {
 						method: 'PUT',
 					})
-					dispatch({type: 'TOGGLE', payload: _id })
+					dispatch({ type: 'TOGGLE', payload: _id })
 				}
 			return item;
 		});
 	}
 
 	return (
-		<div className="App">
+		<div className="container">
+			<h1 className="title">Todo List</h1>
+			<div className="form">
 			<InputForm
 				theValue={handleChange}
 				onClickToDo={onClickToDo}
@@ -99,7 +101,9 @@ function App() {
 				filterDone={filterDone}
 				filterAll={filterAll}
 			/>
-			<ListH>
+			</div>
+			<div className="todoList">
+			<List>
 				{filteredProductList.map((item) => (
 					<ListItem
 						key={item._id}
@@ -113,7 +117,8 @@ function App() {
 						}}
 					/>
 				))}
-			</ListH>
+				</List>
+				</div>
 		</div>
 	);
 }

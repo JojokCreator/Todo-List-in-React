@@ -1,21 +1,22 @@
 const InputForm = (props) => {
 	return (
 		<>
-			<h1>Todo List</h1>
-			<div className="ui input">
-			<input className="box" placeholder="Todo goes here..." onChange={props.theValue}></input>
-			<button className="positive ui button" onClick={props.onClickToDo}>
-				Add a todo
+			<div className="form">
+				<div className="filters">
+			<h3>Filters:</h3>
+				<p className="filter" onClick={props.filterPending}>Pending</p>
+				<div className="or"></div>
+				<p className="filter" onClick={props.filterDone}>Done</p>
+				<div className="or"></div>
+				<p className="filter" onClick={props.filterAll}>All</p>
+			</div>
+			<button onClick={props.onClickToDo}>
+				+
 			</button>
+			<input className="form-input" placeholder="Add new todo here..." onChange={props.theValue}></input>
 			</div>
 			<br />
-			<h3>Filters:</h3>
-			<div className="ui buttons">
-				<button className="green ui button" onClick={props.filterPending}>Pending</button>
-				<div className="or"></div>
-				<button className="blue ui button" onClick={props.filterDone}>Done</button>
-				<div className="or"></div>
-				<button className="green ui button" onClick={props.filterAll}>All</button>
+			<div className="filters">
 			</div>
 			</>
 	);

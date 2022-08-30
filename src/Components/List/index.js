@@ -1,12 +1,16 @@
 import React from 'react'
 
-const ListH = (props) => {
+const List = (props) => {
     return (
-        <div className="ui list">
+        <div>
+            <div className="todo-header">
+            <h1>Todos</h1>
+            <p>{props.children.length} tasks are remaining</p>
+            </div>
             {props.children}
         </div>
 
     )
 }
 
-export default ListH
+export default List

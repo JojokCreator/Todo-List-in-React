@@ -19,7 +19,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 <li>Delete a todo</li>
 </ul>
 
-The styling is done using Semantic UI but could still do with a little work on the aesthetics.
+The styling is done using css but could still do with a little work on the aesthetics.
 
 ## Latest additions
 
